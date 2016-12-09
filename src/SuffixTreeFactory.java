@@ -11,7 +11,7 @@ public class SuffixTreeFactory {
 	private static int activeLength; // En que punto estamos del arco seleccionado
 	
 	// TODO al parecer Integer se copia por valor y no referencia
-	private static Integer end; // Ultimo indice leido, final global para las hojas
+	private static EndIndex end; // Ultimo indice leido, final global para las hojas
 	private static int remainingSuffixCount; // Cantidad de sufijos que se tienen que crear
 	
 	public static SuffixTree build(String in){
@@ -24,7 +24,7 @@ public class SuffixTreeFactory {
 		activeLength = 0;
 		activeEdge = -1;
 				
-		end = new Integer(-1);
+		end = new EndIndex(-1);
 		remainingSuffixCount = 0;
 		
 		// Por cada caracter del input creamos iterativamente el suffix tree implicito
@@ -50,7 +50,7 @@ public class SuffixTreeFactory {
 
 		InnerNode lastCreatedInnerNode = null;
 		
-		end++;
+		end.plusPlus();
 		remainingSuffixCount++;
 		while(remainingSuffixCount > 0){
 			
