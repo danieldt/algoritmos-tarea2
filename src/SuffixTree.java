@@ -8,7 +8,7 @@ import java.util.List;
 public class SuffixTree {
 	
     public static void main(String args[]){
-        SuffixTree st = SuffixTreeFactory.build("mississippi$");
+        SuffixTree st = SuffixTreeFactory.build("mississipi$");
         
         List<String> paths = st.getPaths();
         for (String p : paths){

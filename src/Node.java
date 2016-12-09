@@ -8,11 +8,10 @@ public abstract class Node {
 	// Indices que representan el rango de caracteres del arco que se 
 	// uso para llegar a el
 	protected int first_char_index;
-	protected Integer last_char_index;
 	
 	public Node(int i, Integer j){
-		this.first_char_index = i;
-		this.last_char_index = j;
+		setStart(i);
+		setEnd(j);
 	}
 	
 	public void addChild(Character c, Node n){}
@@ -25,9 +24,9 @@ public abstract class Node {
 		first_char_index = i;
 	}
 	
-	public int end(){
-		return last_char_index;
-	}
+	public abstract void setEnd(int j);
+	
+	public abstract int end();
 	
 	public boolean isRoot(){
 		return false;

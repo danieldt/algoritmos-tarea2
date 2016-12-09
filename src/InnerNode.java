@@ -9,6 +9,8 @@ import java.util.Map;
  */
 public class InnerNode extends Node{
 	
+	private int last_character_index;
+	
 	public InnerNode(int i, Integer j) {
 		super(i, j);
 		this.children = new HashMap<Character, Node>();
@@ -41,6 +43,16 @@ public class InnerNode extends Node{
     public Collection<Node> getChildren(){
     	return children.values();
     }
+
+	@Override
+	public void setEnd(int j) {
+		last_character_index = j;
+	}
+
+	@Override
+	public int end() {
+		return last_character_index;
+	}
 	
 
 	

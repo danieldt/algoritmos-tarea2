@@ -12,8 +12,7 @@ public class LeafNode extends Node {
 	}
 
 	public LeafNode(int i, EndIndex j) {
-		super(i, j.getEnd());
-		this.first_char_index = i;
+		super(i, 0);
 		this.end = j;
 	}
 	
@@ -26,5 +25,8 @@ public class LeafNode extends Node {
 	public boolean isLeaf() {
 		return true;
 	}
+
+	@Override
+	public void setEnd(int j) {}
 	
 }
