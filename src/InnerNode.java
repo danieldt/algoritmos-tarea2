@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +37,10 @@ public class InnerNode extends Node{
     @Override
     void setSuffixLink(Node n) {
         this.suffixLink = n;
+    }
+    @Override
+    public Collection<Node> getChildren(){
+    	return children.values();
     }
 	
 

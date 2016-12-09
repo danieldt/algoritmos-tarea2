@@ -32,7 +32,6 @@ public class SuffixTreeFactory {
 			addPrefix(i);
 			
 		}
-		
 		return ST;		
 	}
 
@@ -52,6 +51,8 @@ public class SuffixTreeFactory {
 		
 		end.plusPlus();
 		remainingSuffixCount++;
+		
+		
 		while(remainingSuffixCount > 0){
 			
 			// Caso en que comenzamos a buscar desde la raiz
@@ -77,6 +78,11 @@ public class SuffixTreeFactory {
 					// Caso de extension # 3, 
 					if(current_char == next_char){
 						// TODO check code
+						if (lastCreatedInnerNode != null){
+							lastCreatedInnerNode.setSuffixLink(selectNode());
+						}
+						//TODO cachar bien caso
+						walkDown(i);
 						break;
 					}
 					// Siguiente caracter no se encuentra en el camino, extendemoss usando # 2
@@ -95,7 +101,7 @@ public class SuffixTreeFactory {
 						newInnerNode.addChild(current_char, newLeafNode);
 						newInnerNode.addChild(input.charAt(node.start()), node);
 						// Reemplazamos el nodo viejo por el nuevo en el nodo activo
-						activeNode.addChild(input.charAt(newInnerNode.start()), newInnerNode);
+						activeNode.addChild(input.charAt(newInnerNode.start()), newInnerNode); 
 						
 						// Si se habia creado un nuevo nodo interno en esta fase entonces lo linkeamos con el creado recientemente
 						if (lastCreatedInnerNode != null){
@@ -148,6 +154,20 @@ public class SuffixTreeFactory {
 		
 	}
 	
+	private static void walkDown(int i) {
+		Node node = selectNode();
+		if(node.length() < activeLength){
+			activeNode = node;
+			activeLength -= node.length();
+			activeEdge = node.getChild(input.charAt(i)).start();
+					
+		}
+		else {
+			activeLength++;
+		}
+		
+	}
+
 	/**
 	 * Encuentra el siguiente caracter para comparar con el de la fase actual, usando la tecnica skip/count 	
 	 * 

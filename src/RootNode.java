@@ -11,4 +11,9 @@ public class RootNode extends InnerNode {
 	public boolean isRoot(){
 		return true;
 	}
+
+	@Override
+	public int length() {
+		return 0;
+	}
 }

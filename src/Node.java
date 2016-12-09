@@ -1,5 +1,4 @@
-
-
+import java.util.Collection;
 
 /**
  * SuffixTree element
@@ -34,9 +33,17 @@ public abstract class Node {
 		return false;
 	}
 	
+	public boolean isLeaf(){
+		return false;
+	}
+	
 	public Node getChild(char c){
 		return null;
 	}
+	
+    public Collection<Node> getChildren(){
+    	return null;
+    }
 	
 	public Node getSuffixLink(){
 		return null;
@@ -46,7 +53,7 @@ public abstract class Node {
     
 	
 	public int length(){
-		return this.end() - this.start();
+		return this.end() - this.start() + 1;
 	}
 	
 	

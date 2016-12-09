@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Suffix tree compuesto de un conjunto de nodos y  
@@ -6,14 +8,19 @@ import java.util.Collection;
 public class SuffixTree {
 	
     public static void main(String args[]){
-        SuffixTree st = SuffixTreeFactory.build("mississippi");
+        SuffixTree st = SuffixTreeFactory.build("mississippi$");
+        
+        List<String> paths = st.getPaths();
+        for (String p : paths){
+        	System.out.println(p);
+        }
 
         int x = 0;
         
     }
 	
 	
-	private Node root;
+	private RootNode root;
 
 	private String source;
 	
@@ -46,6 +53,36 @@ public class SuffixTree {
     public Collection<Integer> search(String word) {
         return null;
     }
+    
+    
+    /**
+     * Retorna todos los paths del root hasta cada hoja
+     * @return
+     */
+    public List<String> getPaths(){
+    	List<String> result = new ArrayList<String>();
+    	
+    	for (Node n : root.getChildren()){
+    		dfs(n, result, "");
+    	}
+    	return result;
+    }
+
+	private void dfs(Node node, List<String> result, String path) {
+		if (node == null)
+			return;
+		
+		// Retornamos el path desde el root hasta la hoja
+		if (node.isLeaf()){
+			result.add(path + source.substring(node.start(), node.end()+1) + " " + node.start());
+			return;
+		}
+		
+		//Else estamos en un nodo interno
+    	for (Node n : node.getChildren()){
+    		dfs(n, result, path + source.substring(node.start(), node.end()+1));
+    	}
+	}
     
     
 }

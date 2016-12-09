@@ -21,4 +21,10 @@ public class LeafNode extends Node {
 	public int end() {
 		return end.getEnd();
 	}	
+	
+	@Override
+	public boolean isLeaf() {
+		return true;
+	}
+	
 }
