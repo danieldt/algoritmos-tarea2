@@ -14,18 +14,12 @@ public class SuffixTree {
         for (String p : paths){
         	System.out.println(p);
         }
-
-        int x = 0;
-        
     }
 	
 	
 	private RootNode root;
 
 	private String source;
-	
-	
-	private Node lastCreatedLeaf; //Guardamos ultimo nodo agregado
 	
 	public Node getRoot(){
 		return root;
@@ -50,6 +44,7 @@ public class SuffixTree {
 	/**
      * Encuentra todas las ocurrencias de la palabra buscada en el arbol
      */
+	//TODO
     public Collection<Integer> search(String word) {
         return null;
     }
@@ -62,7 +57,8 @@ public class SuffixTree {
     public List<String> getPaths(){
     	List<String> result = new ArrayList<String>();
     	
-    	for (Node n : root.getChildren()){
+    	Collection<Node> children = root.getChildren();
+    	for (Node n : children){
     		dfs(n, result, "");
     	}
     	return result;
@@ -71,13 +67,11 @@ public class SuffixTree {
 	private void dfs(Node node, List<String> result, String path) {
 		if (node == null)
 			return;
-		
 		// Retornamos el path desde el root hasta la hoja
 		if (node.isLeaf()){
-			result.add(path + source.substring(node.start(), node.end()+1) + " " + node.start());
+			result.add(path + source.substring(node.start(), node.end()+1) );
 			return;
 		}
-		
 		//Else estamos en un nodo interno
     	for (Node n : node.getChildren()){
     		dfs(n, result, path + source.substring(node.start(), node.end()+1));

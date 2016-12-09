@@ -1,7 +1,5 @@
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,9 +23,10 @@ public class InnerNode extends Node{
 		children.put(c, n);
 	}
 	
-    Node getNode(char c) {
-        return children.get(c);
-    }
+	@Override
+	public Node getChild(char c) {
+		return children.get(c);
+	}
     
     @Override
     public Node getSuffixLink() {

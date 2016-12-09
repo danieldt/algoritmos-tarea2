@@ -12,7 +12,7 @@ public class SuffixTreeFactory {
 	
 	// TODO al parecer Integer se copia por valor y no referencia
 	private static EndIndex end; // Ultimo indice leido, final global para las hojas
-	private static int remainingSuffixCount; // Cantidad de sufijos que se tienen que crear
+	private static int remainingSuffixCount; // Cantidad de sufijos que se tienen que crear (+1 por cada fase, -1 cuando creamos una nueva hoja)
 	
 	public static SuffixTree build(String in){
 		
@@ -57,11 +57,11 @@ public class SuffixTreeFactory {
 			
 			// Caso en que comenzamos a buscar desde la raiz
 			if(activeLength == 0){
-				
+				//Regla #3, avanzamos 1 en direccion del arco
 				if(selectNode(i) != null){
 					activeEdge = selectNode(i).start();
 					activeLength++;
-					break;
+					return;
 				}
 				// Creamos una nueva hoja en la raiz
 				else {
@@ -75,14 +75,26 @@ public class SuffixTreeFactory {
 				
 				// Si es que existe el siguente caracter en el camino
 				if(next_char != 0){
-					// Caso de extension # 3, 
+					// Caso de extension # 3 
 					if(current_char == next_char){
-						// TODO check code
+						
+						//Caso en que habiamos creado un nodo anteriormente
 						if (lastCreatedInnerNode != null){
 							lastCreatedInnerNode.setSuffixLink(selectNode());
 						}
-						//TODO cachar bien caso
-						walkDown(i);
+						//Avanzamos a la siguiente posicion
+						Node node = selectNode();
+						//Caso en que tengamos que cambiar de nodo
+						if(node.length() < activeLength){
+							activeNode = node;
+							activeLength -= node.length();
+							activeEdge = node.getChild(input.charAt(i)).start();
+									
+						}
+						//Continuamos una posicion en este nodo
+						else { 
+							activeLength++;
+						}
 						break;
 					}
 					// Siguiente caracter no se encuentra en el camino, extendemoss usando # 2
@@ -154,20 +166,6 @@ public class SuffixTreeFactory {
 		
 	}
 	
-	private static void walkDown(int i) {
-		Node node = selectNode();
-		if(node.length() < activeLength){
-			activeNode = node;
-			activeLength -= node.length();
-			activeEdge = node.getChild(input.charAt(i)).start();
-					
-		}
-		else {
-			activeLength++;
-		}
-		
-	}
-
 	/**
 	 * Encuentra el siguiente caracter para comparar con el de la fase actual, usando la tecnica skip/count 	
 	 * 
@@ -201,7 +199,7 @@ public class SuffixTreeFactory {
 	}
 
 	/**
-	 * Selecciona el siguiente nodo a partir del nodo activo
+	 * Selecciona el hijo del nodo activo que lleva el arco que empieza con el caracter en i
 	 * 
 	 * @param i
 	 * @return
@@ -210,6 +208,10 @@ public class SuffixTreeFactory {
 		return activeNode.getChild(input.charAt(i));
 	}
 	
+	/**
+	 * Selecciona el hijo del nodo activo que que lleva desde el arco seleccionado 
+	 * @return
+	 */
 	private static Node selectNode(){
 		return selectNode(activeEdge);
 	}

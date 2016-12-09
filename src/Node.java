@@ -53,7 +53,7 @@ public abstract class Node {
     
 	
 	public int length(){
-		return this.end() - this.start() + 1;
+		return this.end() - this.start();// + 1;
 	}
 	
 	
