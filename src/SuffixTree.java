@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class SuffixTree {
         	System.out.println(p);
         }
         
-        List<Integer> res = st.search("issip");
+        List<Integer> res = st.search("ssi");
         for(Integer i : res){
         	System.out.println(i);
         }
@@ -82,15 +83,33 @@ public class SuffixTree {
     		
     	}
     	//No hubieron missmatchs, por lo tanto la palabra esta contenida
+    	//Ahora cada hoja que salga de este nodo representa un indice
     	
-    	result.add(root.getChild(word.charAt(0)).start());
+    	
+    	List<Node> leaves = new ArrayList<Node>();
+    	findLeafs(currentNode, leaves);
+    	for (Node l : leaves){
+    		result.add(l.getLabel());
+    	}
+    	Collections.sort(result);
     	return result;
-        
-        
     }
     
     
-    /**
+    private void findLeafs(Node node, List<Node> result) {
+    	//Si es hoja agregamos al resultado
+    	if(node.isLeaf()){
+    		result.add(node);
+    		return;
+    	}
+    	for(Node n : node.getChildren()){
+    		findLeafs(n, result);
+    	}
+    	
+    	
+	}
+
+	/**
      * Retorna todos los paths del root hasta cada hoja
      * @return
      */
@@ -109,7 +128,7 @@ public class SuffixTree {
 			return;
 		// Retornamos el path desde el root hasta la hoja
 		if (node.isLeaf()){
-			result.add(path + source.substring(node.start(), node.end()+1) );
+			result.add(path + source.substring(node.start(), node.end()+1) + " " + node.getLabel() );
 			return;
 		}
 		//Else estamos en un nodo interno

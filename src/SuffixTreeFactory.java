@@ -14,6 +14,8 @@ public class SuffixTreeFactory {
 	private static EndIndex end; // Ultimo indice leido, final global para las hojas
 	private static int remainingSuffixCount; // Cantidad de sufijos que se tienen que crear (+1 por cada fase, -1 cuando creamos una nueva hoja)
 	
+	private static int labelCount; //Para nombrar las hojas
+	
 	public static SuffixTree build(String in){
 		
 		input = in;
@@ -23,6 +25,7 @@ public class SuffixTreeFactory {
 		activeNode = ST.getRoot();
 		activeLength = 0;
 		activeEdge = -1;
+		labelCount = 0;
 				
 		end = new EndIndex(-1);
 		remainingSuffixCount = 0;
@@ -65,7 +68,8 @@ public class SuffixTreeFactory {
 				}
 				// Creamos una nueva hoja en la raiz
 				else {
-					ST.getRoot().addChild(current_char, new LeafNode(i, end));
+					ST.getRoot().addChild(current_char, new LeafNode(i, end, labelCount));
+					labelCount++;
 					remainingSuffixCount--;
 				}
 			}
@@ -104,7 +108,8 @@ public class SuffixTreeFactory {
 						// Creamos nuevo nodo interno, desde el comienzo hasta el quiebre
 						InnerNode newInnerNode = new InnerNode(node.start(), node.start() + activeLength - 1);
 						// Creamos nueva hoja
-						LeafNode newLeafNode = new LeafNode(i, end);
+						LeafNode newLeafNode = new LeafNode(i, end, labelCount);
+						labelCount++;
 						
 						// Actualizamos el indice del primer caracter del nodo seleccionado
 						node.setStart(node.start() + activeLength);
@@ -141,7 +146,8 @@ public class SuffixTreeFactory {
 				else {
 					
 					Node node = selectNode();
-					LeafNode newLeafNode = new LeafNode(i, end);
+					LeafNode newLeafNode = new LeafNode(i, end, labelCount);
+					labelCount++;
 					node.addChild(current_char, newLeafNode);
 					// El nodo seleccionado queda como un nuevo nodo interno
 					if (lastCreatedInnerNode != null){
