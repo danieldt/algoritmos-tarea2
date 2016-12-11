@@ -14,6 +14,12 @@ public class SuffixTree {
         for (String p : paths){
         	System.out.println(p);
         }
+        
+        List<Integer> res = st.search("issip");
+        for(Integer i : res){
+        	System.out.println(i);
+        }
+        
     }
 	
 	
@@ -42,11 +48,45 @@ public class SuffixTree {
 	}	
 
 	/**
-     * Encuentra todas las ocurrencias de la palabra buscada en el arbol
+     * Encuentra todas las ocurrencias de la palabra buscada en el arbol, retornando los indices en donde aparece
+     * 
      */
 	//TODO
-    public Collection<Integer> search(String word) {
-        return null;
+    public List<Integer> search(String word) {
+        
+    	Node currentNode = root;
+    	List<Integer> result = new ArrayList<Integer>();
+    	
+    	
+    	
+    	//Por cada caracter de la palabra
+    	for (int i = 0; i < word.length(); ++i) {
+    		char ch = word.charAt(i);
+    		//Buscamos si hay un arco que comience con el caracter
+    		Node node = currentNode.getChild(ch);
+    		//Caso en que no se encuentra la palabra en el texto
+    		if(node == null){
+    			return null;
+    		}
+    		//Ahora comparamos los caracteres con el del arco
+    		int charsToMatch = Math.min(word.length() - i, node.length()+1);
+    		for(int j = 1; j < charsToMatch; j++){
+    			//Caso en que no hay camino para seguir
+    			if(word.charAt(i+j) != source.charAt(node.start()+j)){
+    				return null;
+    			}
+    		}
+    		//No hubo missmatchs, continuamos
+    		currentNode = node;
+    		i += charsToMatch - 1; //-1 porque hay un i++ en el for		
+    		
+    	}
+    	//No hubieron missmatchs, por lo tanto la palabra esta contenida
+    	
+    	result.add(root.getChild(word.charAt(0)).start());
+    	return result;
+        
+        
     }
     
     
