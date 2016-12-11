@@ -25,7 +25,6 @@ public class SuffixTree {
         
     }
 	
-	
 	private RootNode root;
 
 	private String source;
@@ -55,7 +54,6 @@ public class SuffixTree {
      * 
      */
     public List<Integer> searchAll(String word) {
-        
     	Node currentNode = root;
     	List<Integer> result = new ArrayList<Integer>();
     	
@@ -86,7 +84,6 @@ public class SuffixTree {
     	//No hubieron missmatchs, por lo tanto la palabra esta contenida
     	//Ahora cada hoja que salga de este nodo representa un indice
     	
-    	
     	List<Node> leaves = new ArrayList<Node>();
     	findLeafs(currentNode, leaves);
     	for (Node l : leaves){
@@ -100,7 +97,6 @@ public class SuffixTree {
      * Retorna el indice de la primera ocurrencia encontrada
      */
     public int searchFirst(String word) {
-        
     	Node currentNode = root;
     	
     	//Por cada caracter de la palabra
