@@ -18,7 +18,7 @@ public class Experiment {
 			
 			for(int i=0;i<n;i++){
 				String pat=getRandomWordFromText(text);
-				int time=st.search(pat).getTime();
+				long time=st.search(pat).getTime();
 				writer.println(pat.length()+":"+time);
 			}
 			writer.close();

@@ -52,8 +52,8 @@ public class SuffixTree {
      * 
      */
 	//TODO
-    public List<Integer> search(String word) {
-        
+    public SearchResult search(String word) {
+    	long ti = System.currentTimeMillis();
     	Node currentNode = root;
     	List<Integer> result = new ArrayList<Integer>();
     	
@@ -84,7 +84,9 @@ public class SuffixTree {
     	//No hubieron missmatchs, por lo tanto la palabra esta contenida
     	
     	result.add(root.getChild(word.charAt(0)).start());
-    	return result;
+    	long tf = System.currentTimeMillis();
+    	long tiempo=tf-ti;
+    	return new SearchResult(result,tiempo);
         
         
     }
