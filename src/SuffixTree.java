@@ -18,8 +18,8 @@ public class SuffixTree {
         
         String word = "ssi";
         System.out.println(st.searchFirst(word));
-        List<Integer> res = st.searchAll(word);
-        for(Integer i : res){
+        SearchResult res = st.searchAll(word);
+        for(Integer i : res.getResults()){
         	System.out.println(i);
         }
         
@@ -53,7 +53,8 @@ public class SuffixTree {
      * Encuentra todas las ocurrencias de la palabra buscada en el arbol, retornando los indices en donde aparece
      * 
      */
-    public List<Integer> searchAll(String word) {
+    public SearchResult searchAll(String word) {
+    	long ti = System.currentTimeMillis();
     	Node currentNode = root;
     	List<Integer> result = new ArrayList<Integer>();
     	
@@ -90,7 +91,10 @@ public class SuffixTree {
     		result.add(l.getLabel());
     	}
     	Collections.sort(result);
-    	return result;
+    	
+    	long tf = System.currentTimeMillis();
+    	long tiempo=tf-ti;
+    	return new SearchResult(result,tiempo);
     }
     
 	/**
