@@ -16,7 +16,9 @@ public class SuffixTree {
         	System.out.println(p);
         }
         
-        List<Integer> res = st.search("ssi");
+        String word = "ssi";
+        System.out.println(st.searchFirst(word));
+        List<Integer> res = st.searchAll(word);
         for(Integer i : res){
         	System.out.println(i);
         }
@@ -52,8 +54,7 @@ public class SuffixTree {
      * Encuentra todas las ocurrencias de la palabra buscada en el arbol, retornando los indices en donde aparece
      * 
      */
-	//TODO
-    public List<Integer> search(String word) {
+    public List<Integer> searchAll(String word) {
         
     	Node currentNode = root;
     	List<Integer> result = new ArrayList<Integer>();
@@ -93,6 +94,40 @@ public class SuffixTree {
     	}
     	Collections.sort(result);
     	return result;
+    }
+    
+	/**
+     * Retorna el indice de la primera ocurrencia encontrada
+     */
+    public int searchFirst(String word) {
+        
+    	Node currentNode = root;
+    	
+    	//Por cada caracter de la palabra
+    	for (int i = 0; i < word.length(); ++i) {
+    		char ch = word.charAt(i);
+    		//Buscamos si hay un arco que comience con el caracter
+    		Node node = currentNode.getChild(ch);
+    		//Caso en que no se encuentra la palabra en el texto
+    		if(node == null){
+    			return -1;
+    		}
+    		//Ahora comparamos los caracteres con el del arco
+    		int charsToMatch = Math.min(word.length() - i, node.length()+1);
+    		for(int j = 1; j < charsToMatch; j++){
+    			//Caso en que no hay camino para seguir
+    			if(word.charAt(i+j) != source.charAt(node.start()+j)){
+    				return -1;
+    			}
+    		}
+    		//No hubo missmatchs, continuamos
+    		currentNode = node;
+    		i += charsToMatch - 1; //-1 porque hay un i++ en el for		
+    		
+    	}
+    	//No hubieron missmatchs, por lo tanto la palabra esta contenida
+    	//Ahora cada hoja que salga de este nodo representa un indice
+    	return root.getChild(word.charAt(0)).start();
     }
     
     
