@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,11 +13,26 @@ public class InnerNode extends Node{
 	
 	private int last_character_index;
 	
+	private List<Integer> leafLabels;
+	
 	public InnerNode(int i, Integer j) {
 		super(i, j);
 		this.children = new HashMap<Character, Node>();
+		this.leafLabels = new ArrayList<Integer>();
 	}
-
+	
+	public void addLeafLabel(int i){
+		leafLabels.add(i);
+	}
+	
+	public void setLeafLabel(List<Integer> list){
+		this.leafLabels = list;
+	}
+	
+	public List<Integer> getLeavesLabels(){
+		return leafLabels;
+	}
+	
 	protected Map<Character, Node> children;
 	
 	protected Node suffixLink; //s(v)

@@ -73,9 +73,7 @@ public abstract class Node {
 	
 	public int getLabel(){
 		return -1;
-	}
-	
-	
+	}	
 	
 	
 }
