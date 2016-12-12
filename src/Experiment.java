@@ -2,24 +2,32 @@ import java.io.*;
 import java.util.Random;
 public class Experiment {
 	private static Random rand=new Random();
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-		for(int exp=15;exp<26;exp++){
+		for(int exp=15;exp<25;exp++){
 			PrintWriter writer = new PrintWriter("resul-exp-"+exp+".txt", "UTF-8");
 			int patsize=20;
 			BufferedReader br = new BufferedReader(new FileReader("texto.txt"));
 			String text = br.readLine();
-			text=text.substring(0, 2^exp);
+			int largo=(int) Math.pow(2, exp);
+			text=text.substring(0,largo<text.length()?largo:text.length());
+			System.out.println("empezando onstru");
 			SuffixTree st = SuffixTreeFactory.build(text.concat("$"));
-			int costo=st.costo();
-			writer.println("costo construccion= "+costo);
+			System.out.println("ontru terminada");
+			st.buildInnerNodeLabels();
+			System.out.println("build terminada");
+			//int costo=st.costo();
+			//writer.println("costo construccion= "+costo);
 			int n=text.length()/10;
-			
+			System.out.println("waa"+n);
 			
 			for(int i=0;i<n;i++){
 				String pat=getRandomWordFromText(text);
-				long time=st.search(pat).getTime();
-				writer.println(pat.length()+":"+time);
+				SearchResult res = st.searchAllWithLabels(pat);
+				//SearchResult res = st.searchAll(pat);
+				
+				long time=res.getTime();
+				writer.println(pat.length()+":"+time+":"+res.getResults().size());
 			}
 			writer.close();
 		}

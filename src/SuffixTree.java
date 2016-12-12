@@ -207,7 +207,7 @@ public class SuffixTree {
     public SearchResult searchAllWithLabels(String word) {
     	long ti = System.currentTimeMillis();
     	Node currentNode = root;
-    	List<Integer> result = new ArrayList<Integer>();
+    
     	
     	//Por cada caracter de la palabra
     	for (int i = 0; i < word.length(); ++i) {
