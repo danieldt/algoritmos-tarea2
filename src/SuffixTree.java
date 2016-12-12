@@ -16,9 +16,11 @@ public class SuffixTree {
         	System.out.println(p);
         }
         
-        String word = "ssi";
+        String word = "si";
         System.out.println(st.searchFirst(word));
-        List<Integer> res = st.searchAll(word);
+        
+        st.buildInnerNodeLabels();
+        List<Integer> res = st.searchAllWithLabels(word);
         for(Integer i : res){
         	System.out.println(i);
         }
@@ -56,8 +58,6 @@ public class SuffixTree {
     public List<Integer> searchAll(String word) {
     	Node currentNode = root;
     	List<Integer> result = new ArrayList<Integer>();
-    	
-    	
     	
     	//Por cada caracter de la palabra
     	for (int i = 0; i < word.length(); ++i) {
@@ -167,6 +167,76 @@ public class SuffixTree {
     		dfs(n, result, path + source.substring(node.start(), node.end()+1));
     	}
 	}
+	
+	public void buildInnerNodeLabels(){
+		for (Node n : root.getChildren()){
+			setLeafLabels(n);
+		}
+		return;
+	}
+	
+	private List<Integer> setLeafLabels(Node node){
+		if (node == null)
+			return null;
+		List<Integer> leavesLabels = new ArrayList<Integer>();
+		if (node.isLeaf()){ // si es hoja retornamos su label
+			leavesLabels.add(node.getLabel());
+		}
+		else {
+			//Agregamos todos los labels de los hijos
+			for(Node n : node.getChildren()){
+				leavesLabels.addAll(setLeafLabels(n));
+			}
+			((InnerNode) node).setLeafLabel(leavesLabels);
+		}
+		return leavesLabels;
+	}
+	
+	/**
+     * Encuentra todas las ocurrencias de la palabra buscada en el arbol, retornando los indices en donde aparece
+     * 
+     */
+    public List<Integer> searchAllWithLabels(String word) {
+    	Node currentNode = root;
+    	List<Integer> result = new ArrayList<Integer>();
+    	
+    	//Por cada caracter de la palabra
+    	for (int i = 0; i < word.length(); ++i) {
+    		char ch = word.charAt(i);
+    		//Buscamos si hay un arco que comience con el caracter
+    		Node node = currentNode.getChild(ch);
+    		//Caso en que no se encuentra la palabra en el texto
+    		if(node == null){
+    			return null;
+    		}
+    		//Ahora comparamos los caracteres con el del arco
+    		int charsToMatch = Math.min(word.length() - i, node.length()+1);
+    		for(int j = 1; j < charsToMatch; j++){
+    			//Caso en que no hay camino para seguir
+    			if(word.charAt(i+j) != source.charAt(node.start()+j)){
+    				return null;
+    			}
+    		}
+    		//No hubo missmatchs, continuamos
+    		currentNode = node;
+    		i += charsToMatch - 1; //-1 porque hay un i++ en el for		
+    		
+    	}
+    	//No hubieron missmatchs, por lo tanto la palabra esta contenida
+    	//Ahora cada hoja que salga de este nodo representa un indice
+    	List<Integer> leaves;
+    	if(currentNode.isLeaf()){
+    		leaves = new ArrayList<Integer>();
+    		leaves.add(currentNode.getLabel());
+    		
+    	}
+    	else {
+    		leaves = ((InnerNode) currentNode).getLeavesLabels();
+    		Collections.sort(leaves);
+    	}
+    	return leaves;
+    	
+    }
     
     
 }
