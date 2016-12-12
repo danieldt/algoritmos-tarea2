@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -203,7 +204,8 @@ public class SuffixTree {
      * Encuentra todas las ocurrencias de la palabra buscada en el arbol, retornando los indices en donde aparece
      * 
      */
-    public List<Integer> searchAllWithLabels(String word) {
+    public SearchResult searchAllWithLabels(String word) {
+    	long ti = System.currentTimeMillis();
     	Node currentNode = root;
     	List<Integer> result = new ArrayList<Integer>();
     	
@@ -241,7 +243,10 @@ public class SuffixTree {
     		leaves = ((InnerNode) currentNode).getLeavesLabels();
     		Collections.sort(leaves);
     	}
-    	return leaves;
+    	long tf = System.currentTimeMillis();
+    	long tiempo=tf-ti;
+    	return new SearchResult(leaves,tiempo);
+   
     	
     }
     
