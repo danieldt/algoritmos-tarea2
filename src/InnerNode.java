@@ -18,7 +18,7 @@ public class InnerNode extends Node{
 	public InnerNode(int i, Integer j) {
 		super(i, j);
 		this.children = new HashMap<Character, Node>();
-		this.leafLabels = new ArrayList<Integer>();
+		this.leafLabels = null;
 	}
 	
 	public void addLeafLabel(int i){
