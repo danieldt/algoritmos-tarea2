@@ -13,25 +13,11 @@ public class InnerNode extends Node{
 	
 	private int last_character_index;
 	
-	private List<Integer> leafLabels;
-	
 	public InnerNode(int i, Integer j) {
 		super(i, j);
 		this.children = new HashMap<Character, Node>();
-		this.leafLabels = null;
 	}
 	
-	public void addLeafLabel(int i){
-		leafLabels.add(i);
-	}
-	
-	public void setLeafLabel(List<Integer> list){
-		this.leafLabels = list;
-	}
-	
-	public List<Integer> getLeavesLabels(){
-		return leafLabels;
-	}
 	
 	protected Map<Character, Node> children;
 	
