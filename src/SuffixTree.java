@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -9,21 +10,33 @@ import java.util.List;
 public class SuffixTree {
 	
     public static void main(String args[]){
-        SuffixTree st = SuffixTreeFactory.build("mississipi$");
+    	
+    	int length = (int) Math.pow(2, 10);
+    	char[] charArray = new char[length];
+    	Arrays.fill(charArray, 's');
+    	charArray[length-1] = '$';
+    	charArray[length-2] = 'i';
+    	
+    	String word = "Missisippi";//new String(charArray);
+    	System.out.println(word);
+        SuffixTree st = SuffixTreeFactory.build(word);
+        System.out.println("build!");
         
-        List<String> paths = st.getPaths();
-        for (String p : paths){
-        	System.out.println(p);
-        }
+//        List<String> paths = st.getPaths();
+//        for (String p : paths){
+//        	System.out.println(p);
+//        }
         
-        String word = "si";
-        System.out.println(st.searchFirst(word));
+        String pattern = "i";
+        System.out.println(st.searchFirst(pattern));
         
-        st.buildInnerNodeLabels();
-        List<Integer> res = st.searchAllWithLabels(word);
-        for(Integer i : res){
-        	System.out.println(i);
-        }
+//        st.buildInnerNodeLabels();        
+        
+        List<Integer> res = st.searchAll(pattern);
+//        for(Integer i : res){
+//        	System.out.println(i);
+//        }
+        System.out.println(res.size());
         
     }
 	
@@ -136,8 +149,6 @@ public class SuffixTree {
     	for(Node n : node.getChildren()){
     		findLeafs(n, result);
     	}
-    	
-    	
 	}
 
 	/**
@@ -198,8 +209,6 @@ public class SuffixTree {
      */
     public List<Integer> searchAllWithLabels(String word) {
     	Node currentNode = root;
-    	List<Integer> result = new ArrayList<Integer>();
-    	
     	//Por cada caracter de la palabra
     	for (int i = 0; i < word.length(); ++i) {
     		char ch = word.charAt(i);

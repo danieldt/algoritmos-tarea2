@@ -32,8 +32,9 @@ public class SuffixTreeFactory {
 		
 		// Por cada caracter del input creamos iterativamente el suffix tree implicito
 		for(int i = 0; i < input.length(); i++){
+			sstattime
 			addPrefix(i);
-			
+			end time
 		}
 		return ST;		
 	}
