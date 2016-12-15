@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 
 public class SuffixTreeFactory {
 	
@@ -16,7 +18,12 @@ public class SuffixTreeFactory {
 	
 	private static int labelCount; //Para nombrar las hojas
 	
+	public static int total_cost_count; //contador de costo total realizado
+	public static Map<Integer, Integer> phaseCost; //guarda costo de cada fase
+	
 	public static SuffixTree build(String in){
+		total_cost_count = 0;
+		phaseCost = new HashMap<Integer, Integer>();
 		
 		input = in;
 		ST = new SuffixTree(input);
@@ -54,9 +61,11 @@ public class SuffixTreeFactory {
 		end.plusPlus();
 		remainingSuffixCount++;
 		
-		
+		int phase_cost_count = 0;
 		while(remainingSuffixCount > 0){
-			
+			//El costo de una fase es cuantas veces se hace el while
+			total_cost_count++;
+			phase_cost_count++;
 			// Caso en que comenzamos a buscar desde la raiz
 			if(activeLength == 0){
 				//Regla #3, avanzamos 1 en direccion del arco
@@ -168,7 +177,9 @@ public class SuffixTreeFactory {
 			}
 		//endwhile	
 		}
-		
+		if(phase_cost_count > 1){
+			phaseCost.put(i, phase_cost_count);
+		}
 	}
 	
 	/**

@@ -10,12 +10,20 @@ import java.util.List;
 public class SuffixTree {
 	
     public static void main(String args[]){
-        SuffixTree st = SuffixTreeFactory.build("mississipi$");
+    	
+    	String word = "sssss$";//"mississipi$";
+    	System.out.println(word.length());
+        SuffixTree st = SuffixTreeFactory.build(word);
+        
+        System.out.println(SuffixTreeFactory.total_cost_count);
         
         List<String> paths = st.getPaths();
         for (String p : paths){
         	System.out.println(p);
         }
+        
+        System.out.println(st.searchAll("ssi").getResults().toString());
+        
     }
 	
 	private RootNode root;
