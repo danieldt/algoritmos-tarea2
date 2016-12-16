@@ -1,2 +1,4 @@
 *.txt
 bin/SuffixTree.class
+*.class
+*.class
