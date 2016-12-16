@@ -8,7 +8,7 @@ import java.util.List;
  * Suffix tree compuesto de un conjunto de nodos y  
  */
 public class SuffixTree {
-	private static int[] tiempos;
+	static int[] tiempos;
     public static void main(String args[]){
         SuffixTree st = SuffixTreeFactory.build("mississipi$");
         

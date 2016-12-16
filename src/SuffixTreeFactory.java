@@ -36,7 +36,7 @@ public class SuffixTreeFactory {
 			long tic = System.nanoTime();
 			addPrefix(i);				
 			long tfc = System.nanoTime();
-	    	ST.getTiempos()[i]=(int)(tfc-tic);
+	    	ST.tiempos[i]=(int)(tfc-tic);
 			
 		}
 		return ST;		
