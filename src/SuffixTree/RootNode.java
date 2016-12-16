@@ -1,3 +1,4 @@
+package SuffixTree;
 
 public class RootNode extends InnerNode {
 

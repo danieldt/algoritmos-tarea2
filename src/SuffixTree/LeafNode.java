@@ -1,4 +1,5 @@
-
+package SuffixTree;
+import Experiment.EndIndex;
 
 /**
  * Borde del arbol

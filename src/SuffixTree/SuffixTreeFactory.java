@@ -1,5 +1,8 @@
+package SuffixTree;
 import java.util.HashMap;
 import java.util.Map;
+
+import Experiment.EndIndex;
 
 public class SuffixTreeFactory {
 	
@@ -12,7 +15,6 @@ public class SuffixTreeFactory {
 	private static int activeEdge; // Llave del arco seleccionado del nodo activo
 	private static int activeLength; // En que punto estamos del arco seleccionado
 	
-	// TODO al parecer Integer se copia por valor y no referencia
 	private static EndIndex end; // Ultimo indice leido, final global para las hojas
 	private static int remainingSuffixCount; // Cantidad de sufijos que se tienen que crear (+1 por cada fase, -1 cuando creamos una nueva hoja)
 	
@@ -39,7 +41,12 @@ public class SuffixTreeFactory {
 		
 		// Por cada caracter del input creamos iterativamente el suffix tree implicito
 		for(int i = 0; i < input.length(); i++){
-			addPrefix(i);
+			
+			long tic = System.nanoTime();
+			addPrefix(i);				
+			long tfc = System.nanoTime();
+	    	ST.tiempos[i]=(int)(tfc-tic);
+			
 		}
 		return ST;		
 	}
